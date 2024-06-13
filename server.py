@@ -13,10 +13,15 @@ os.environ["TRANSFORMERS_OFFLINE"] = "1"
 
 class Phi3VisionLitAPI(ls.LitAPI):
     def setup(self, device):
-        model_id = "microsoft/Phi-3-vision-128k-instruct"
+        #model_id = "microsoft/Phi-3-vision-128k-instruct"
+        model_id = "/opt/LLM/Phi-3-vision-128k-instruct"
         self.model = None
+        #self.model = AutoModelForCausalLM.from_pretrained(
+        #    model_id, device_map=device, trust_remote_code=True, torch_dtype="auto"
+        #).eval()
+
         self.model = AutoModelForCausalLM.from_pretrained(
-            model_id, device_map=device, trust_remote_code=True, torch_dtype="auto"
+            model_id, device_map="cuda:0", trust_remote_code=True, torch_dtype="auto", _attn_implementation="eager"
         ).eval()
 
         self.processor = AutoProcessor.from_pretrained(model_id, trust_remote_code=True)
