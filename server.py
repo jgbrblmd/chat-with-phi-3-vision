@@ -83,5 +83,5 @@ class Phi3VisionLitAPI(ls.LitAPI):
 
 if __name__ == "__main__":
     api = Phi3VisionLitAPI()
-    server = ls.LitServer(api, spec=ls.OpenAISpec())
+    server = ls.LitServer(api, spec=ls.OpenAISpec(), workers_per_device=1)
     server.run(port=8000)
